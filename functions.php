@@ -1,47 +1,3 @@
-<?php
-define('THEME_NAME', 'CorePress_Pro');
-define('THEME_VERSION', 17);
-define('THEME_DOWNURL', 'https://www.lovestu.com/corepress.html');
-define('THEME_VERSIONNAME', '1.3.3');
-define('THEME_PATH', get_template_directory());
-define('THEME_STATIC_PATH', get_template_directory_uri() . '/static');
-define('THEME_CSS_PATH', THEME_STATIC_PATH . '/css');
-define('THEME_JS_PATH', THEME_STATIC_PATH . '/js');
-define('THEME_LIB_PATH', THEME_STATIC_PATH . '/lib');
-define('THEME_IMG_PATH', THEME_STATIC_PATH . '/img');
-define('FRAMEWORK_PATH', THEME_PATH . '/geekframe');
-$upload = wp_upload_dir();
-$upload_dir = $upload['basedir'];
-define('AVATAR_DIR', $upload_dir . '/corepress_avatar/');
-define('FRAMEWORK_URI', get_template_directory_uri() . '/geekframe');
-define('AJAX_URL', admin_url('admin-ajax.php'));
-require_once(FRAMEWORK_PATH . '/options.php');
-$set = options::getInstance()->getdata();
-require_once(FRAMEWORK_PATH . '/utils.php');
-require_once(FRAMEWORK_PATH . '/support.php');
-require_once(FRAMEWORK_PATH . '/users.php');
-require_once(FRAMEWORK_PATH . '/ajax.php');
-require_once(FRAMEWORK_PATH . '/loadfiles.php');
-require_once(FRAMEWORK_PATH . '/seo/category.php');
-require_once(FRAMEWORK_PATH . '/comment-pro.php');
-require_once(THEME_PATH . '/widgets/comments.php');
-require_once(THEME_PATH . '/widgets/author.php');
-require_once(THEME_PATH . '/widgets/hot-post.php');
-require_once(THEME_PATH . '/widgets/tag-cloud.php');
-require_once(THEME_PATH . '/widgets/sentence.php');
-require_once(THEME_PATH . '/widgets/weather.php');
-require_once(THEME_PATH . '/widgets/time.php');
-require_once(THEME_PATH . '/widgets/img-card.php');
-require_once(THEME_PATH . '/widgets/author-admin.php');
-add_action('widgets_init', 'load_widget');
-require_once(FRAMEWORK_PATH . '/shortcode.php');
-add_editor_style('static/css/editor-style.css');
-error_reporting(0);
-require_once(ABSPATH . 'wp-admin/includes/file.php');
-require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-require_once(FRAMEWORK_PATH . '/compatible.php');
-WP_Filesystem();
-function add_editor_buttons($buttons) {
 //每一行的$buttons[] 代表一个功能，可以根据实际使用情况进行删减。
 $buttons[] = 'fontselect';
 $buttons[] = 'fontsizeselect';
@@ -60,36 +16,6 @@ add_filter("mce_buttons_2", "add_editor_buttons");
 //wp-clean-up
 include ("wcu/wp-clean-up.php");
 
-//短代码按钮
-function appthemes_add_reply() {
-?>
-    <script type="text/javascript">
-        if ( typeof QTags != 'undefined' ) {
-            QTags.addButton('zd-plane', '折叠面板', '[zd-plane title="折叠标题"]', '[/zd-plane]');
-            QTags.addButton('title', '标题面板', '[title-plane title="标题"]', '[/title-plane]');
-            QTags.addButton('success', '蓝色成功', '[c-alert type="success"]', '[/c-alert]');
-            QTags.addButton('error', '红色警告', '[c-alert type="error"]', '[/c-alert]');
-            QTags.addButton('embed', '卡片内链', '<div align="center">[embed]', '[/embed]</div>');
-            QTags.addButton('pre', '代码高亮', '<pre class="corepress-code-pre"><code>', '</code></pre>');
-            QTags.addButton('code', '行内代码', '<code>', '</code>');
-            QTags.addButton('dh', '导航图标', '', '[dh url="链接" icon="图标" des="描述"]名称[/dh]');
-            QTags.addButton('bl', 'B站视频', '', '[bvideo bv="','"][/bvideo]' );
-            QTags.addButton( 'vip_only', '会员可见', '[vip_only]','[/vip_only]' );
-            QTags.addButton( 'loginshow', '登录可见', '[loginshow]','[/loginshow]' );  
-            QTags.addButton( 'loginshow', '公众号可见', '[wxshow]','[/wxshow]' );  
-            QTags.addButton( 'gfxz', '官方下载', '[c-downbtn type="default" url="','" pwd=""]资源文件下载[/c-downbtn]' );
-            QTags.addButton( 'od', 'OneDrive', '[c-downbtn type="OneDrive" url="','" pwd=""]资源文件下载[/c-downbtn]' );
-             QTags.addButton( 'bd', '百度网盘', '[c-downbtn type="bd" url="','" pwd=""]资源文件下载[/c-downbtn]' );
-            QTags.addButton( 'ms', 'Microsoft Store', '[c-downbtn type="Microsoft Store" url="','" pwd=""]资源文件下载[/c-downbtn]' );
-            QTags.addButton( 'as', 'App Store', '[c-downbtn type="App Store" url="','" pwd=""]资源文件下载[/c-downbtn]' );
-            QTags.addButton( 'gp', 'Google Play Store', '[c-downbtn type="Google Play Store" url="','" pwd=""]资源文件下载[/c-downbtn]' );
-        } 
-    </script>
-<?php 
-}
-add_action('admin_print_footer_scripts', 'appthemes_add_reply' );
-
-
 
 //vip可见
 add_shortcode( 'vip_only', 'users_read_shortcode' );//注册短代码
@@ -105,6 +31,8 @@ function users_read_shortcode( $atts, $content = null ) {
        return '';
     }
 }
+
+
 //添加普通用户角色
 add_role('pt_user', '普通用户', array(
 'read' => false, //读权限
