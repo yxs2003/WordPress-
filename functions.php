@@ -5,16 +5,11 @@ $buttons[] = 'backcolor';
 $buttons[] = 'underline';
 $buttons[] = 'sub';
 $buttons[] = 'sup';
-$buttons[] = 'cleanup';
 $buttons[] = 'wp_page';
 return $buttons;
 }
 //数字2表示添加在编辑器的第二栏，如果改成3就是添加在第三栏
 add_filter("mce_buttons_2", "add_editor_buttons");
-
-
-//wp-clean-up
-include ("wcu/wp-clean-up.php");
 
 
 //vip可见
