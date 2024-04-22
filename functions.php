@@ -1,42 +1,4 @@
-//每一行的$buttons[] 代表一个功能，可以根据实际使用情况进行删减。
-$buttons[] = 'fontselect';
-$buttons[] = 'fontsizeselect';
-$buttons[] = 'backcolor';
-$buttons[] = 'underline';
-$buttons[] = 'sub';
-$buttons[] = 'sup';
-$buttons[] = 'wp_page';
-return $buttons;
-}
-//数字2表示添加在编辑器的第二栏，如果改成3就是添加在第三栏
-add_filter("mce_buttons_2", "add_editor_buttons");
-
-
-//vip可见
-add_shortcode( 'vip_only', 'users_read_shortcode' );//注册短代码
-function users_read_shortcode( $atts, $content = null ) {
-    if ( is_user_logged_in() && !empty( $content ) && current_user_can( 'read' ) )    { 
-       return '<div>
-<span class="vip_only">'.$content.'</span></div>';
-    }
-   if ( !is_user_logged_in()){
-      return '';
-    }
-   if ( is_user_logged_in() && !current_user_can( 'read' )){
-       return '';
-    }
-}
-
-
-//添加普通用户角色
-add_role('pt_user', '普通用户', array(
-'read' => false, //读权限
-'edit_posts' => false,//编辑权限
-'delete_posts' => false, //删除权限
-));
-
-
-
+//添加说说功能请看本人的另一个储存仓库，配合以下代码使用
 //说说功能
 function my_custom_shuoshuo_init() { 
 	$labels = array( 
@@ -348,7 +310,7 @@ function author_link_request( $query_vars ) {
 
 
 
-//WordPress 评论通过审核后邮件通知评论人
+//WordPress 评论通过审核后邮件通知评论人（部分主题自带这个功能）
 add_action('comment_unapproved_to_approved', 'loper_comment_approved');
 function loper_comment_approved($comment) {
   if(is_email($comment->comment_author_email)) {
@@ -377,7 +339,7 @@ function loper_comment_approved($comment) {
     }
 }
 
-//WordPress 评论回复邮件通知
+//WordPress 评论回复邮件通知（部分主题自带这个功能）
  function comment_mail_notify($comment_id) {
       //$admin_notify = '1'; // admin 要不要收回复通知 ( '1'=要 ; '0'=不要 )
      $comment = get_comment($comment_id);//根据id获取这条评论相关数据
